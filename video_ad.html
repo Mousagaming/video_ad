@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fullscreen Video</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <video id="myVideo" autoplay loop muted>
+    <!-- Use relative path to video file stored in GitHub repository -->
+    <source src="video_ad.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <script>
+    const video = document.getElementById("myVideo");
+
+    // Function to ensure fullscreen on load
+    function goFullscreen() {
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      } else if (video.webkitRequestFullscreen) { // Safari
+        video.webkitRequestFullscreen();
+      } else if (video.mozRequestFullScreen) { // Firefox
+        video.mozRequestFullScreen();
+      } else if (video.msRequestFullscreen) { // IE/Edge
+        video.msRequestFullscreen();
+      }
+    }
+
+    // Ensure the video goes fullscreen immediately after it starts playing
+    video.addEventListener('canplay', function() {
+      goFullscreen();
+    });
+
+    // Restart video if it ends (ensures it loops properly)
+    video.addEventListener("ended", function() {
+      video.play();
+    });
+  </script>
+</body>
+</html>
